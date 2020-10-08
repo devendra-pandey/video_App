@@ -9,7 +9,7 @@ from datetime import datetime
 datetime.utcnow()
 import pymysql
 
-ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif','mp4'])
 
 
 app.config['SECRET_KEY'] = 'Th1s1ss3cr3t'
@@ -49,6 +49,7 @@ def allowed_file(filename):
 @app.route('/file-upload', methods=['POST'])
 def upload_file():
 	# check if the post request has the file part
+	# data = request.get_json()
 	if 'file' not in request.files:
 		resp = jsonify({'message' : 'No file part in the request'})
 		resp.status_code = 400
@@ -62,9 +63,9 @@ def upload_file():
 		filename = secure_filename(file.filename)
 		file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 		
-		new_video = backend_video(video_filename=data['video_filename'])
+		new_video = video_file(video_filename=file.filename)
 		db.session.add(new_video)
-	    db.session.commit()
+		db.session.commit()
 		resp = jsonify({'message' : 'File successfully uploaded'})
 		resp.status_code = 201
 		return resp
