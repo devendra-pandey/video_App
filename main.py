@@ -101,7 +101,7 @@ def feedback_video():
 @app.route('/comments_get/<video_id>', methods=['GET'])
 def feedback_video():
 	feedbacks = feedback.query.filter_by(video_id=video_id).first()
-    result = []
+	result = []
 	for comments in feedbacks:
 		feedbacks_data = {}
 		feedbacks_data['id'] = comments.id
