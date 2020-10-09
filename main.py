@@ -9,8 +9,9 @@ from datetime import datetime
 datetime.utcnow()
 import pymysql
 
-ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif','mp4'])
+ALLOWED_EXTENSIONS = ["jpg", "png", "mov", "mp4", "mpg"]
 
+app.config["MAX_CONTENT_LENGTH"] = 1000 * 1024 * 1024  # 1000mb
 
 app.config['SECRET_KEY'] = 'Th1s1ss3cr3t'
 ## local ##
