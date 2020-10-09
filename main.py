@@ -99,7 +99,7 @@ def feedback_video():
     return jsonify({'message': 'comment aaded successfull'})
 
 @app.route('/comments_get/<video_id>', methods=['GET'])
-def feedback_video():
+def feedback_videos():
 	feedbacks = feedback.query.filter_by(video_id=video_id).first()
 	result = []
 	for comments in feedbacks:
