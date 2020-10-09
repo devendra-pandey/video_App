@@ -88,6 +88,30 @@ def get_video():
 		
 	return jsonify({'vedios': result})
 
+@app.route('/comments', methods=['POST'])
+def feedback_video():
+    data = request.get_json()
+    comment_data = feedback( comment = data['comment'],video_id= data['video_id'])
+    print("$$$%%^^^%$#$%^&^%$#@#$%%$#")
+    db.session.add(comment_data)
+    db.session.commit()
+
+    return jsonify({'message': 'comment aaded successfull'})
+
+@app.route('/comments_get/<video_id>', methods=['GET'])
+def feedback_video():
+	feedbacks = feedback.query.filter_by(video_id=video_id).first()
+    result = []
+	for comments in feedbacks:
+		feedbacks_data = {}
+		feedbacks_data['id'] = comments.id
+		feedbacks_data['comment'] = comments.comment
+
+		result.append(feedbacks_data)
+		
+	return jsonify({'vedios': result})
+    
+
 
 
 
