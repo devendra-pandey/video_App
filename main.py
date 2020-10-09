@@ -88,15 +88,24 @@ def get_video():
 		
 	return jsonify({'vedios': result})
 
-@app.route('/comments', methods=['POST'])
+@app.route('/comments_like', methods=['POST'])
 def feedback_video():
-    data = request.get_json()
-    comment_data = feedback( comment = data['comment'],video_id= data['video_id'])
-    print("$$$%%^^^%$#$%^&^%$#@#$%%$#")
-    db.session.add(comment_data)
-    db.session.commit()
+	data = request.get_json()
+	comment_data = feedback( comment = data['comment'],video_id= data['video_id'],like=data['like'])
+	db.session.add(comment_data)
+	db.session.commit()
+	print("You have liked it")
+	return jsonify({'message': 'comment aaded successfull with like'})
+	
+@app.route('/comments', methods=['POST'])
+def feedbacks_video():
+	data = request.get_json()
+	comment_data = feedback( comment = data['comment'],video_id= data['video_id'])
+	db.session.add(comment_data)
+	db.session.commit()
+	print("You have liked it")
+	return jsonify({'message': 'comment aaded successfull without like'})
 
-    return jsonify({'message': 'comment aaded successfull'})
 
 @app.route('/comments_get/<video_id>', methods=['GET'])
 def feedback_videos():
