@@ -75,5 +75,21 @@ def upload_file():
 		resp.status_code = 400
 		return resp
 
+@app.route('/get_video', methods=['GET'])
+def get_video():
+	video = video_file.query.filter_by(is_active="1").all()
+	result = []
+	for vedios in video:
+		vedios_data = {}
+		vedios_data['id'] = vedios.id
+		vedios_data['video_filename'] = vedios.video_filename
+		
+		result.append(vedios_data)
+		
+	return jsonify({'vedios': result})
+
+
+
+
 if __name__ == "__main__":
     app.run()
