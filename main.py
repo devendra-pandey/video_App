@@ -18,8 +18,7 @@ app.config['SECRET_KEY'] = 'Th1s1ss3cr3t'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:sdp150516@localhost:3306/video_app'
 
 ##development ##
-
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:sdp150516@134.209.151.88:3306/video_app'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:sdp150516@134.209.151.88:3306/video_app'
 
 db = SQLAlchemy(app)
 
@@ -51,7 +50,7 @@ class feedback(db.Model):
 def allowed_file(filename):
 	return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-@app.route('/)
+@app.route('/')
 def index():
 	return "hey its working"
 
@@ -131,4 +130,4 @@ def feedback_videos():
     
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=3000)
+    app.run(host='0.0.0.0', port=8000)
