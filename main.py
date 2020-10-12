@@ -17,6 +17,10 @@ app.config['SECRET_KEY'] = 'Th1s1ss3cr3t'
 ## local ##
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:sdp150516@localhost:3306/video_app'
 
+##development ##
+
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:sdp150516@134.209.151.88:3306/video_app'
+
 db = SQLAlchemy(app)
 
 @app.before_first_request
@@ -47,6 +51,11 @@ class feedback(db.Model):
 def allowed_file(filename):
 	return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+@app.route('/)
+def index():
+	return "hey its working"
+
+
 @app.route('/file-upload', methods=['POST'])
 def upload_file():
 	# check if the post request has the file part
@@ -71,7 +80,7 @@ def upload_file():
 		resp.status_code = 201
 		return resp
 	else:
-		resp = jsonify({'message' : 'Allowed file types are txt, pdf, png, jpg, jpeg, gif'})
+		resp = jsonify({'message' : 'Allowed file types are png, jpg, jpeg, gif,mp4'})
 		resp.status_code = 400
 		return resp
 
@@ -109,7 +118,7 @@ def feedbacks_video():
 
 @app.route('/comments_get/<video_id>', methods=['GET'])
 def feedback_videos():
-	feedbacks = feedback.query.filter_by(video_id=video_id).first()
+	feedbacks = feedback.query.filter_by(video_id=video_id).all()
 	result = []
 	for comments in feedbacks:
 		feedbacks_data = {}
@@ -121,8 +130,5 @@ def feedback_videos():
 	return jsonify({'vedios': result})
     
 
-
-
-
 if __name__ == "__main__":
-    app.run()
+    app.run(host='0.0.0.0', port=3000)
