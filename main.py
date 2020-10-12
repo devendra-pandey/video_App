@@ -116,8 +116,8 @@ def feedbacks_video():
 
 
 @app.route('/comments_get/<video_id>', methods=['GET'])
-def feedback_videos():
-	feedbacks = feedback.query.filter_by(video_id=video_id).all()
+def feedback_videos(video_id):
+	feedbacks = feedback.query.filter_by(video_id = video_id).all()
 	result = []
 	for comments in feedbacks:
 		feedbacks_data = {}
@@ -127,6 +127,27 @@ def feedback_videos():
 		result.append(feedbacks_data)
 		
 	return jsonify({'vedios': result})
+
+
+@app.route('/like_count/<video_id>', methods=['GET'])
+def feedback_like_counts(video_id):
+	feedbacks = feedback.query.filter_by(video_id = video_id,like = 1).count()
+	
+	result = []
+	result.append(feedbacks)
+		
+	return jsonify({'total likes of the videos': result})
+
+@app.route('/dislike_count/<video_id>', methods=['GET'])
+def feedback_dislike_counts(video_id):
+	feedbacks = feedback.query.filter_by(video_id = video_id,like = 0).count()
+	
+	result = []
+	result.append(feedbacks)
+		
+	return jsonify({'total Dislikes of the videos': result})
+
+    
     
 
 if __name__ == "__main__":
