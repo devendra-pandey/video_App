@@ -1,6 +1,5 @@
 import os
 import urllib.request
-from app import app
 from flask import Flask, request, redirect, jsonify
 from werkzeug.utils import secure_filename
 import functools
@@ -8,6 +7,19 @@ from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 datetime.utcnow()
 import pymysql
+
+
+app = Flask(__name__, static_url_path='/static')
+
+
+UPLOAD_FOLDER = 'uploads'
+UPLOAD_FOLDER_PATH = os.path.join(os.path.dirname(__name__), UPLOAD_FOLDER)
+if not os.path.exists(UPLOAD_FOLDER_PATH):
+    os.mkdirs(UPLOAD_FOLDER_PATH)
+
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
+
 
 ALLOWED_EXTENSIONS = ["jpg", "png", "mov", "mp4", "mpg"]
 
